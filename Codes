@@ -1,0 +1,212 @@
+Actitity.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/Iamrelative"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/edt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your Weight in KG"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edt2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edt1"
+        android:layout_marginBottom="-87dp"
+        android:hint="Enter your Height in meter"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/Button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Calculate"
+        android:text="PRESS ME"
+        android:layout_centerInParent="true">
+
+    </Button>
+
+    <EditText
+        android:id="@+id/edt3"
+        android:paddingLeft="10dp"
+        android:hint="This is your BMI"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/Button1"
+        android:layout_marginBottom="-71dp">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edt4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/edt3"
+        android:layout_marginBottom="-98dp"
+        android:hint="This is the Result"
+        android:paddingLeft="10dp"
+        android:textSize="20dp">
+
+    </EditText>
+
+    <Switch
+        android:id="@+id/IamSwitch"
+        android:onClick="isClicked"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edt4"
+        android:layout_marginBottom="-53dp"
+        android:layout_alignRight="@+id/edt4"
+        android:paddingRight="10dp"
+        android:layout_alignEnd="@+id/edt4"></Switch>
+
+
+</RelativeLayout>
+
+
+
+
+mainactivity.java
+
+package com.example.noname;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.Display;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.security.PublicKey;
+
+public class MainActivity extends AppCompatActivity {
+    public  Button button;
+    public EditText edt1,edt2,edt3,edt4;
+    float weight , height;
+    float res;
+    Switch aSwitch;
+    RelativeLayout relativeLayout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        button = findViewById(R.id.Button1);
+        edt1 = findViewById(R.id.edt1);
+        edt2 = findViewById(R.id.edt2);
+        edt3 = findViewById(R.id.edt3);
+        edt4 =findViewById(R.id.edt4);
+        relativeLayout=findViewById(R.id.Iamrelative);
+        aSwitch = findViewById(R.id.IamSwitch);
+
+
+    }
+
+
+    public void Calculate(View view) {
+
+
+        if(edt1.getText()==null)
+        {
+            Toast.makeText(getApplicationContext(),"Enter valid Number",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            weight = Float.parseFloat(edt1.getText()+"");
+        }
+        if(edt2.getText()==null){
+            Toast.makeText(getApplicationContext(),"Enter valid number",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            height = Float.parseFloat(edt2.getText()+"");
+        }
+        res = weight/(height*height);
+        edt3.setText(res + "");
+        edt1.setText(null);
+        edt2.setText(null);
+
+        DisplayType(res);
+
+
+    }
+    public void DisplayType(float res){
+        String Cat;
+        if(res<15){
+            Cat = "Very Severely UnderWeight";
+        }
+        else if(res<16){
+            Cat  = "Severely UnderWeight";
+        }
+        else if(res<18.5){
+            Cat = "Severely UnderWeight";
+        }
+        else if(res<25){
+            Cat = "Normal";
+        }
+        else if(res<30){
+            Cat = "OverWeight";
+        }
+        else if(res<35){
+            Cat = "Moderately Obese";
+        }
+        else if(res<40){
+            Cat = "Severely Obese";
+        }
+        else {
+            Cat = "Very Severely Obese";
+        }
+        edt4.setText(Cat);
+
+    }
+
+    public void isClicked(View view) {
+        if(aSwitch.isChecked()){
+            relativeLayout.setBackgroundColor(Color.GREEN);
+
+        }
+        else {
+            relativeLayout.setBackgroundColor(Color.WHITE);
+        }
+    }
+}
+
+
+styles.xml
+
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+</resources>
